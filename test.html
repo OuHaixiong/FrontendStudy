@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+    <head>
+        <meta charset="utf-8" />
+        <title>测试js和css</title>
+    </head>
+    <body>
+    
+        <script>
+        // 下面是练习js的沙箱环境，开始
+        eval('console.log("a simple script");');
+        new Function('console.log("a simple script");') ();
+
+        // 还是加一下吧
+function compileCode (src) {  
+  src = 'with (sandbox) {' + src + '}'
+  const code = new Function('sandbox', src)
+
+  return function (sandbox) {
+    const sandboxProxy = new Proxy(sandbox, {has, get})
+    return code(sandboxProxy)
+  }
+}
+
+function has (target, key) {  
+  return true
+}
+
+function get (target, key) {  
+// 这样,访问Array里面的 like, includes之类的方法,就可以保证安全... 算了,就当我没说,真的没啥用...
+  if (key === Symbol.unscopables) return undefined
+  return target[key]
+}
+
+compileCode('log("wo kao");')(console); // 在控制台打印东西
+// compileCode('alert("wo kao");')(window); // 这样是不行的
+compileCode('function nihao(name){console.log(name+"你好");};nihao("ou海雄");')(window); // 99.999%的安全
+// 上面是练习js的沙箱环境，结束
+
+
+        </script>
+    </body>
+</html>  

@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+    <head>
+        <meta charset="utf-8" />
+        <title>HTML5 本地缓存</title>
+    </head>
+    <body>
+        <h2>Html 5 本地存储</h2>
+        <div>You have viewed this page <span id="view_count">0</span> time(s).</div>
+        <script>
+            // sessionStorage:随着浏览器的关闭数据消失
+            // localStorage:一直存储在本地
+            // if (window.localStorage) {
+            //     alert('This browser supports localStorage');
+            // } else {
+            //     alert('This brower does not support localStorage');
+            // }
+            // window.localStorage.a = 3; // 设置a为3
+            // var a = localStorage.a; // 获取a的值
+            // alert(a);
+            // localStorage['b'] = 'OUhaixiong'; // 设置b为OUhaixiong
+            // var b = localStorage['b']; // 获取b的值
+            // alert(b);
+            // localStorage.setItem('b', '欧阳海雄');
+            // alert(localStorage.getItem('b'));
+            // for (var i=0; i<localStorage.length; i++) {
+            //     document.write(localStorage.key(i) + ' : ' + localStorage.getItem(localStorage.key(i)) + '<br />'); // key() 方法用于获取键名
+            // }
+            // localStorage.removeItem('b'); // 清除b的值
+            // alert(localStorage.getItem('b')); // 获取，如果已经清除，返回null
+            
+            // alert(localStorage.getItem('a'));
+            // localStorage.clear(); // 清除所有的键值对（清除所有的缓存）
+            // alert(localStorage.getItem('a'));
+            var pageCountKey = 'pageLoadCount';
+            if (!localStorage.getItem(pageCountKey)) {
+                localStorage.setItem(pageCountKey, 0);
+            }
+            localStorage.setItem(pageCountKey, parseInt(localStorage.getItem(pageCountKey))+1); // localStorage 只能存储字符串
+            document.getElementById('view_count').innerHTML = localStorage.getItem(pageCountKey);
+// 另外，在iPhone/iPad上有时设置setItem()时会出现诡异的QUOTA_EXCEEDED_ERR错误，这时一般在setItem之前，先removeItem()就ok了。
+        </script>
+    </body>
+</html>
